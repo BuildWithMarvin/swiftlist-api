@@ -1,0 +1,105 @@
+#sidebar{
+height: 100%;
+width: 25%;
+margin-right: 1.5%;
+}
+
+
+#AppName{
+  display: flex;
+  justify-content: center;
+  align-items: center; 
+  display: inline-block;
+  font-family: Merriweather;
+}
+
+ #MainSubMenu{
+  display: flex;
+  justify-content: center;
+  align-items: flex-start; 
+  flex-direction: column;
+}
+
+
+.mainMenu
+{
+   display: flex;
+  justify-content: flex-start;
+  align-items: center; 
+  width:100%;
+  font-size: 0.8em;
+}
+
+ .MenuFont{
+  font-size: 0.9em;
+  font-family: Merriweather;
+}
+
+#upgradeFont{
+  margin-top: 0;
+ font-size: 0.6em;
+}
+
+
+main{
+font-family: Merriweather;
+}
+
+#upgrade{
+
+margin:0;
+font-size: 0.8em;
+display: flex;
+justify-content: center;
+align-items: flex-start;
+}
+
+#test{
+  border-radius: min(15px, 5%);
+  background-color:  #7B68EE;
+  display: inline;
+  /* justify-content: center;
+  align-items: center; 
+  flex-direction: column; */
+}
+
+#upgradeAdd{
+  border-radius: min(15px, 25%);
+  background-color:  #7B68EE;
+ display: flex;
+  justify-content: flex-start;
+  align-items: center; 
+  width:100%;
+  font-size: 0.8em;
+   
+}
+
+#updateIconBox{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: transparent;
+  }
+
+  
+
+#MenuHeader{
+  font-size:0.8em;
+}
+
+
+
+
+
+#modeContainer{
+   display: flex;
+  justify-content: flex-start;
+  align-items: center; 
+  width:100%;
+  font-size: 0.8em;}
+
+  
+.themesImg{
+  height:4%;
+  width:7%;
+}

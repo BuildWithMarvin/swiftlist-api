@@ -1,0 +1,16 @@
+{
+  "db": {
+    "host": "localhost",
+    "user": "YOUR_DB_USER",
+    "password": "YOUR_DB_PASSWORD",
+    "database": "swiftlist",
+    "waitForConnections": true,
+    "connectionLimit": 10,
+    "queueLimit": 0
+  },
+  "redis": {
+    "url": "redis://127.0.0.1:6379/0",
+    "password": "YOUR_REDIS_PASSWORD"
+  },
+  "PORT": 3000
+}
