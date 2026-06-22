@@ -24,5 +24,4 @@ const app = http.createServer(async (req, res) => {
 
 });
 
-// WICHTIG: Wir exportieren die App nur, wir starten sie hier NICHT!
 module.exports = app;
