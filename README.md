@@ -75,6 +75,5 @@ This project is currently being used to deepen my understanding of:
 * **Session-based authentication**
 * **Redis integration**
 * **MySQL data access**
-* **MySQL data access**
 * **Backend security fundamentals**
 

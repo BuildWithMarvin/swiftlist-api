@@ -1,5 +1,5 @@
-const middleware = require("../middleware/sessions.cjs");
-const routes = require("./routes");
+import {attachUserToRequest} from "../middleware/sessions.js";
+import {handlePaths, handleGetRoutes, handlePostRoutes} from "./routes.js"
 
 
 // TODO: currently, stylesheets and public paths are listed here manually. 
@@ -10,7 +10,7 @@ const PUBLIC_ROUTES = ["/login", "/register", "/validate"]; // TODO : find a sol
 async function routeRequest(req, res, parsedUrl) {
   
   //comment out for tests without a session
-  await middleware.attachUserToRequest(req); 
+  await attachUserToRequest(req); 
 
   const pathname = parsedUrl.pathname;
 
@@ -22,6 +22,7 @@ const isPublicRoute = PUBLIC_ROUTES.includes(pathname) || pathname.startsWith('/
     return res.end();
   }
 
-routes.handlePaths(pathname, req, res);
+  handlePaths(pathname, req, res);
 }
-module.exports = { routeRequest };
+
+export default routeRequest;

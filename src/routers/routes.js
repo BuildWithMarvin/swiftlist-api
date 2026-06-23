@@ -1,8 +1,9 @@
-const authCtrl = require("../controll/authCtrl");
-const pageCtrl = require("../controll/pageCtrl");
-const assetCtrl = require("../controll/assetCtrl");
+import {showLoginPage, showDashboard} from "../controll/pageCtrl.js"
+import {showDesign, showHover} from "../controll/assetCtrl.js"
+import {prcsLogin} from "../controll/authCtrl.js"
 
-async function handlePaths(path, req, res)
+
+export async function handlePaths(path, req, res)
 {
      method = req.method;
 
@@ -17,28 +18,23 @@ async function handlePaths(path, req, res)
 
 }
 
-async function handleGetRoutes(req, res, path) {
+export async function handleGetRoutes(req, res, path) {
     switch (path) {
-    case "/login":   return pageCtrl.showLoginPage(res);
-    case "/styles/output.css" : return assetCtrl.showDesign(res);
-     case "/styles/hover.css" : return authCtrl.showHover(res);
-    case "/register":  return authCtrl.showRegister(req, res);
-    case "/dashboard": return pageCtrl.showDashboard(res);
-    case "/settings":  return userCtrl.getSettings(req, res);
-    // case "/validate":  return userCtrl.EmailVerifyController(req, res);
+    case "/login":   return showLoginPage(res);
+    case "/styles/output.css" : return showDesign(res);
+     case "/styles/hover.css" : return showHover(res);
+    case "/register":  return showRegister(req, res);
+    case "/dashboard": return showDashboard(res);
     default:
       res.writeHead(404);
       res.end("Seite nicht gefunden");
   }
 }
 
-async function handlePostRoutes(req, res, path) {
-
+export async function handlePostRoutes(req, res, path) {
     switch (path) {
-    case "/validate":     return authCtrl.prcsLogin(req, res);
-    case "/register":  return authCtrl.showRegister(req, res);
-    // case "/dashboard": return userCtrl.showDashboard(req, res);
-    case "/settings":  return userCtrl.getSettings(req, res);
+    case "/validate":     return prcsLogin(req, res);
+    case "/register":  return showRegister(req, res);
     default:
       res.writeHead(404);
       res.end("Seite nicht gefunden");
@@ -46,4 +42,3 @@ async function handlePostRoutes(req, res, path) {
 }
 
 
-module.exports = { handlePaths };

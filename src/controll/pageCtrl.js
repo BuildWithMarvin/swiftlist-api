@@ -1,8 +1,8 @@
-const fs = require("fs");
-const path = require("path");
+import fs from "fs";
+import path from "path";
 
 
-function showLoginPage(res) {
+export function showLoginPage(res) {
   const filename = path.join("src", "view", "login.html");
   fs.readFile(filename, "utf8", (error, data) => {
     if (error) {
@@ -16,7 +16,7 @@ function showLoginPage(res) {
   });
 }
 
-function showDashboard(res) {
+export function showDashboard(res) {
   const filename = path.join("src", "view", "dashboard.html");
   fs.readFile(filename, "utf8", (error, data) => {
     if (error) {
@@ -30,7 +30,3 @@ function showDashboard(res) {
   });
 }
 
-module.exports={
-    showLoginPage,
-    showDashboard
-}

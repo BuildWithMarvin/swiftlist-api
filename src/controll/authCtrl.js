@@ -1,13 +1,13 @@
-const fs = require("fs");
-const path = require("path");
-const database = require("../model/dbModel.cjs");
-const bcrypt = require("bcrypt");
-const { parse } = require("querystring");
-const middleware = require("../middleware/sessions.cjs");
-const { setDefaultHighWaterMark } = require("stream");
-const { session_ttl_seconds } = require("../config/sessionConfig");
+import fs from "fs";
+import path from "path";
+import bcrypt from "bcrypt";
+import parse from "querystring";
+import {getUserForLogin} from "../model/dbModel.js";
+import {createSession} from '../middleware/sessions.js'; // Falls sessions.js ein "export default" nutzt
+import { setDefaultHighWaterMark } from 'stream';
+import { session_ttl_seconds } from '../config/sessionConfig.js'; // Mit .js Endung!
 
-async function prcsLogin(req, res) {
+export async function prcsLogin(req, res) {
   try {
     const data = await collectRequestData(req);
     const username = data?.username;
@@ -22,7 +22,7 @@ async function prcsLogin(req, res) {
       res.end("username and password are required");
       return;
     }
-    const user = await database.getUserForLogin(username);
+    const user = await getUserForLogin(username);
 
     const match = user ? await bcrypt.compare(password, user.password) : false;
     if (!match) {
@@ -72,6 +72,10 @@ async function prcsLogin(req, res) {
   }
 }
 
+// export async function prcsLogin(req, res) {
+//   console.log("Test-Export funktioniert!");
+// }
+
 function collectRequestData(request) {
   const FORM_URLENCODED = "application/x-www-form-urlencoded";
   const MAX_SIZE = 16 * 1024;
@@ -106,4 +110,4 @@ function collectRequestData(request) {
   });
 }
 
-module.exports = { prcsLogin };
+

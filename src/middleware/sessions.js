@@ -1,5 +1,5 @@
-const { randomBytes } = require("crypto");
-const dbRedis = require("../model/SessionModel");
+import { randomBytes } from 'crypto';
+import {findSession, saveSession } from "../model/SessionModel.js"
 
 function parseCookies(req) {
   const cookieHeader = req.headers.cookie;
@@ -13,7 +13,7 @@ function parseCookies(req) {
   );
 }
 
-function getSessionId(req) {
+export function getSessionId(req) {
   const cookieHeader = req.headers.cookie; 
   if (!cookieHeader) return null; 
   const cookies = parseCookies(req)
@@ -21,12 +21,12 @@ function getSessionId(req) {
 
 }
 
-async function attachUserToRequest(req) {
+export async function attachUserToRequest(req) {
   const sessionId = getSessionId(req);
   req.user = null;
 
   if (sessionId) {
-    const sessionData = await dbRedis.findSession(sessionId);
+    const sessionData = await findSession(sessionId);
 
     if (sessionData) {
       const currentAgent = req.headers["user-agent"] || "unknown";
@@ -45,7 +45,7 @@ if (sessionData.userAgent === currentAgent) {
   }
 }
 
-async function createSession(req, user) {
+export async function createSession(req, user) {
   const sessionId = randomBytes(32).toString("hex");
 
   // Fallback to ‘unknown’ so that JSON.stringify doesn't omit any fields when saving to the database
@@ -60,15 +60,10 @@ async function createSession(req, user) {
   };
 
   
-  await dbRedis.saveSession(sessionId, sessionPayload);
+  await saveSession(sessionId, sessionPayload);
 
   return sessionId;
 }
 
 
 
-module.exports = {
-  getSessionId,
-  createSession,
-  attachUserToRequest,
-};

@@ -1,14 +1,14 @@
-const redisClient = require("../config/redisClient");
-const { session_ttl_seconds } = require("../config/sessionConfig");
+import redisClient from "../config/redisClient.js";
+import session_ttl_seconds from "../config/sessionConfig.js"
 
 
-async function saveSession(sessionID, payload) {
+export async function saveSession(sessionID, payload) {
 
 
   await redisClient.set(`session:${sessionID}`, JSON.stringify(payload),{ EX: session_ttl_seconds });
 }
 
-async function findSession(sessionID)
+export async function findSession(sessionID)
 {
 
    const value =  await redisClient.get(`session:${sessionID}`);
@@ -18,7 +18,3 @@ async function findSession(sessionID)
   return JSON.parse(value);
 }
 
-module.exports = {
-  saveSession,
-  findSession
-}

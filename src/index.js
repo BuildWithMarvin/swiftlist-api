@@ -1,7 +1,7 @@
-const app = require("./app");
-const redisClient = require("./config/redisClient");
-const { testDatabaseConnection } = require("./config/db");
-const config = require("./config/config")
+import app from './app.js';
+import redisClient from './config/redisClient.js';
+import { testDatabaseConnection } from"./config/db.js";
+import config from '../config.json' with { type: 'json' };
 
 
 async function startApplication() {

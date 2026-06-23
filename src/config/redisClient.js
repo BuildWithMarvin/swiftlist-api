@@ -1,5 +1,5 @@
-const { createClient } = require('redis');
-const config = require("./config")
+import { createClient } from 'redis';
+import config from '../../config.json' with { type: 'json' };
 
 
 const redisClient = createClient({
@@ -11,4 +11,4 @@ const redisClient = createClient({
 redisClient.on('error', (err) => console.error('Redis Client Error', err));
 
 
-module.exports = redisClient;
+export default redisClient;

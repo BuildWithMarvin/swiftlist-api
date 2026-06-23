@@ -1,7 +1,7 @@
-const http = require('http');
-const url = require('url');
-const router = require('./routers/router');
-const { performance, PerformanceObserver } = require('perf_hooks');
+import http from 'http';
+import url from 'url';
+import { performance, PerformanceObserver } from 'perf_hooks';
+import router from './routers/router.js';
 
 
 const app = http.createServer(async (req, res) => {
@@ -24,4 +24,4 @@ const app = http.createServer(async (req, res) => {
 
 });
 
-module.exports = app;
+export default app

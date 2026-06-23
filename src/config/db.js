@@ -1,7 +1,7 @@
-const mysql = require("mysql2/promise");
-const config = require("./config")
+import mysql from 'mysql2/promise';
+import config from '../../config.json' with { type: 'json' };
 
-const pool = mysql.createPool({
+export const pool = mysql.createPool({
   host: config.db.host,
   user: config.db.user,
   password: config.db.password,
@@ -12,7 +12,7 @@ const pool = mysql.createPool({
 });
 
 
-async function testDatabaseConnection() {
+export async function testDatabaseConnection() {
   try {
   
     const connection = await pool.getConnection();
@@ -24,7 +24,3 @@ async function testDatabaseConnection() {
   }
 }
 
-module.exports = {
-  pool,
-  testDatabaseConnection
-};

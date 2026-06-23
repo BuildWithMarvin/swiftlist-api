@@ -1,11 +1,11 @@
-const fs = require("fs");
-const path = require("path");
+import fs from "fs";
+import path from "path";
 
-function showDesign(res) {
+export function showDesign(res) {
   const filename = path.join("src", "view", "styles", "output.css");
   fs.readFile(filename, "utf8", (error, data) => {
     if (error) {
-      console.error("Datei-Lesefehler:", error);
+      console.error("File read error:", error);
       res.writeHead(500, { "content-type": "text/html" });
       res.end("<h1>500 - Server-Fehler</h1>");
     } else {
@@ -15,7 +15,7 @@ function showDesign(res) {
   });
 }
 
-function showHover(res) {
+export function showHover(res) {
   const filename = path.join("src", "view", "styles", "hover.css");
   fs.readFile(filename, "utf8", (error, data) => {
     if (error) {
@@ -29,6 +29,3 @@ function showHover(res) {
   });
 }
 
-module.exports = {
-    showDesign
-}
