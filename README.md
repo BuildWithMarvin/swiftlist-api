@@ -7,7 +7,7 @@ The goal of this project was to understand how common backend features work unde
 ## Tech Stack
 
 * **Runtime:** Node.js Core HTTP Module
-* **Database:** MySQL
+* **Database:** MariaDB / MySQL
 * **Session Store:** Redis
 * **Authentification:** bcrypt
 * **Security Utilities:** crypto
@@ -54,11 +54,9 @@ Instead of using Express.js or another web framework, the API uses Node.js core 
 
 ### Prerequisites
 
-* **Node.js**
-* **MySQL**
+* **Node.js 20+**
+* **MariaDB 10.4+ (or MySQL 8.0+)**
 * **Redis**
-
-Connection settings currently need to be configured manually before starting the application.
 
 ## Current Learning Goals
 
@@ -68,6 +66,5 @@ This project is currently being used to deepen my understanding of:
 * **Custom routing**
 * **Session-based authentication**
 * **Redis integration**
-* **MySQL data access**
 * **Backend security fundamentals**
 
