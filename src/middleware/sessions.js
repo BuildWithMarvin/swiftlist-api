@@ -1,5 +1,5 @@
-import { randomBytes } from 'crypto';
-import {findSession, saveSession } from "../model/SessionModel.js"
+import { randomBytes } from "crypto";
+import { findSession, saveSession } from "../model/SessionModel.js";
 
 function parseCookies(req) {
   const cookieHeader = req.headers.cookie;
@@ -14,11 +14,10 @@ function parseCookies(req) {
 }
 
 export function getSessionId(req) {
-  const cookieHeader = req.headers.cookie; 
-  if (!cookieHeader) return null; 
-  const cookies = parseCookies(req)
+  const cookieHeader = req.headers.cookie;
+  if (!cookieHeader) return null;
+  const cookies = parseCookies(req);
   return cookies["sessionId"] || null; // Nullish Coalescing ensures that only null/undefined values are caught
-
 }
 
 export async function attachUserToRequest(req) {
@@ -30,16 +29,14 @@ export async function attachUserToRequest(req) {
 
     if (sessionData) {
       const currentAgent = req.headers["user-agent"] || "unknown";
-        
-      
-      //TODO: Expand the logging system to store IP addresses and timestamps for security analysis
-      // Protection against session hijacking: We compare the current browser with the one used at login
-if (sessionData.userAgent === currentAgent) {
+
+      // Save IP addresses and timestamps in logs for better security.
+
+      // Check User-Agent to prevent session hijacking. Must match the login state
+      if (sessionData.userAgent === currentAgent) {
         req.user = sessionData;
       } else {
-        console.warn(
-          `Suspicious session access blocked. User-agent mismatch.`,
-        );
+        console.warn(`Suspicious session access blocked. User-agent mismatch.`);
       }
     }
   }
@@ -51,19 +48,14 @@ export async function createSession(req, user) {
   // Fallback to ‘unknown’ so that JSON.stringify doesn't omit any fields when saving to the database
   const userAgent = req.headers["user-agent"] || "unknown";
 
-  
   const sessionPayload = {
     userId: user.user_id,
     username: user.username,
-    role: user.role, 
-    userAgent: userAgent
+    role: user.role,
+    userAgent: userAgent,
   };
 
-  
   await saveSession(sessionId, sessionPayload);
 
   return sessionId;
 }
-
-
-

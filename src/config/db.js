@@ -17,10 +17,10 @@ export async function testDatabaseConnection() {
   
     const connection = await pool.getConnection();
     console.log("Database connection test successful.");
-    connection.release(); // Ganz wichtig: Verbindung sofort wieder freigeben!
+    connection.release(); 
   } catch (error) {
     console.error("Database connection failed:", error.message);
-    process.exit(1); // Anwendung stoppen, wenn die DB nicht erreichbar ist
+    process.exit(1); 
   }
 }
 

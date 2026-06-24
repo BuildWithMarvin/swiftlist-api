@@ -2,10 +2,11 @@ import {attachUserToRequest} from "../middleware/sessions.js";
 import {handlePaths, handleGetRoutes, handlePostRoutes} from "./routes.js"
 
 
-// TODO: currently, stylesheets and public paths are listed here manually. 
-// As the number of pages increases, this becomes confusing - we need an automated 
-// solution that handles static files (images, CSS) separately from the app logic.
-const PUBLIC_ROUTES = ["/login", "/register", "/validate"]; // TODO : find a solution for the stylesheets , there shouldn't be an entry for every one of them
+/*
+  TODO: Automate static file handling (images, CSS) to separate 
+  asset delivery from core application routing logic as the app scales.
+ */
+const PUBLIC_ROUTES = ["/login", "/register", "/validate"]; 
 
 async function routeRequest(req, res, parsedUrl) {
   

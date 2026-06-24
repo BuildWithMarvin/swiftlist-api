@@ -1,11 +1,12 @@
-import {showLoginPage, showDashboard} from "../controll/pageCtrl.js"
-import {showDesign, showHover} from "../controll/assetCtrl.js"
-import {prcsLogin} from "../controll/authCtrl.js"
+import {showLoginPage, showDashboard} from "../controller/pageCtrl.js";
+import {showDesign, showHover} from "../controller/assetCtrl.js";
+import {prcsLogin} from "../controller/authCtrl.js";
+
 
 
 export async function handlePaths(path, req, res)
 {
-     method = req.method;
+     const method = req.method;
 
     if(method == "GET")
      {
@@ -27,7 +28,7 @@ export async function handleGetRoutes(req, res, path) {
     case "/dashboard": return showDashboard(res);
     default:
       res.writeHead(404);
-      res.end("Seite nicht gefunden");
+      res.end("Page not found");
   }
 }
 
@@ -37,7 +38,7 @@ export async function handlePostRoutes(req, res, path) {
     case "/register":  return showRegister(req, res);
     default:
       res.writeHead(404);
-      res.end("Seite nicht gefunden");
+      res.end("Page not found");
   }
 }
 

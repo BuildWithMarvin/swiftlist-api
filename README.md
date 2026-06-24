@@ -40,7 +40,7 @@ Instead of using Express.js or another web framework, the API uses Node.js core 
 * **Sessions are stored in Redis**
 * **Each session has a configurable TTL**
 * **User roles are cached within the session to reduce database lookups**
-* **User-Agent validation is used as an additional session verification step**
+* * **User-Agent Validation:** Checks if the current User-Agent matches the login session to protect against session hijacking.
 
 ### Security
 

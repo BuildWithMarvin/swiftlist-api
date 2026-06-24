@@ -1,7 +1,7 @@
 import http from 'http';
 import url from 'url';
 import { performance, PerformanceObserver } from 'perf_hooks';
-import router from './routers/router.js';
+import routeRequest from './routers/router.js';
 
 
 const app = http.createServer(async (req, res) => {
@@ -15,7 +15,7 @@ const app = http.createServer(async (req, res) => {
     })
     try {
       
-        await router.routeRequest(req, res, parsedUrl);
+        await routeRequest(req, res, parsedUrl);
     } catch (err) {
         console.error(err)
         res.statusCode = 500;

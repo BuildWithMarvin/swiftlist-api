@@ -3,6 +3,10 @@ import redisClient from './config/redisClient.js';
 import { testDatabaseConnection } from"./config/db.js";
 import config from '../config.json' with { type: 'json' };
 
+/*
+ TODO: Implement Graceful Shutdown.
+ Close MySQL and Redis connections cleanly on SIGTERM/SIGINT.
+ */
 
 async function startApplication() {
   await redisClient.connect();
@@ -16,5 +20,3 @@ async function startApplication() {
 }
 
 startApplication();
-// TODO: When shutting down the server, let open HTTP requests time out
-// and cleanly close all MySQL and Redis database connections.

@@ -1,23 +1,20 @@
 import fs from "fs";
 import path from "path";
 import bcrypt from "bcrypt";
-import parse from "querystring";
-import {getUserForLogin} from "../model/dbModel.js";
-import {createSession} from '../middleware/sessions.js'; // Falls sessions.js ein "export default" nutzt
-import { setDefaultHighWaterMark } from 'stream';
-import { session_ttl_seconds } from '../config/sessionConfig.js'; // Mit .js Endung!
+import queryString from "query-string";
+import { getUserForLogin } from "../model/dbModel.js";
+import { createSession } from "../middleware/sessions.js";
+import { setDefaultHighWaterMark } from "stream";
+import { session_ttl_seconds } from "../config/sessionConfig.js"; 
 
 export async function prcsLogin(req, res) {
   try {
+    console.log("Test");
     const data = await collectRequestData(req);
     const username = data?.username;
     const password = data?.password;
 
-    if (
-      !username ||
-      !password
-    ) // perhabs unnecessary as there is already a rescriction on empty inputs
-    {
+    if (!username || !password) {
       res.writeHead(401, { "content-type": "text/html" }); //check the righ status code for that cause
       res.end("username and password are required");
       return;
@@ -31,7 +28,7 @@ export async function prcsLogin(req, res) {
       return;
     }
 
-    const cookie = await middleware.createSession(req, user);
+    const cookie = await createSession(req, user);
 
     res.writeHead(301, {
       Location: "/dashboard",
@@ -42,26 +39,22 @@ export async function prcsLogin(req, res) {
   } catch (error) {
     console.error("Login Request Error:", error.message);
 
-    // 1. Fall: Zeitüberschreitung (Der Watchdog hat zugeschlagen)
     if (error.message === "Request timeout") {
-      // Status 408 steht offiziell für "Request Timeout"
       res.writeHead(408, { "Content-Type": "text/plain; charset=utf-8" });
       return res.end(
-        "Zeitüberschreitung bei der Anfrage. Bitte lade die Seite neu und versuche es noch einmal.",
+        "The request timed out. Please refresh the page and try again.",
       );
     }
 
-    // 2. Fall: Jemand hat versucht, riesige Datenmengen zu schicken
     if (error.message === "Payload too large") {
-      // Status 413 steht für "Payload Too Large"
       res.writeHead(413, { "Content-Type": "text/plain; charset=utf-8" });
-      return res.end("Die gesendeten Daten sind zu groß.");
+      return res.end("The data being sent is too large");
     }
 
     if (error.message === "PARSE_ERROR") {
       res.writeHead(400, { "Content-Type": "text/plain; charset=utf-8" });
       return res.end(
-        "Die gesendeten Formulardaten konnten nicht verarbeitet werden.",
+        "The form data submitted could not be processed.",
       );
     }
 
@@ -71,10 +64,6 @@ export async function prcsLogin(req, res) {
     );
   }
 }
-
-// export async function prcsLogin(req, res) {
-//   console.log("Test-Export funktioniert!");
-// }
 
 function collectRequestData(request) {
   const FORM_URLENCODED = "application/x-www-form-urlencoded";
@@ -97,7 +86,7 @@ function collectRequestData(request) {
 
       request.on("end", () => {
         try {
-          resolve(parse(body));
+          resolve(queryString.parse(body));
         } catch (err) {
           reject(new Error(err));
         }
@@ -109,5 +98,3 @@ function collectRequestData(request) {
     }
   });
 }
-
-

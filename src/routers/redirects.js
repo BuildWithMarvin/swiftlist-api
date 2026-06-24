@@ -1,5 +1,5 @@
-const fs = require("fs");
-const path = require("path");
+import fs from ("fs");
+import path from ("path");
 
 
 
@@ -11,7 +11,7 @@ function getInterfaces(req, res, parsedUrl) {
         if (error) {
           console.error("Datei-Lesefehler:", error);
           res.writeHead(500, { "content-type": "text/html" });
-          res.end("<h1>500 - Server-Fehler</h1>");
+          res.end("<h1>500 - server-error</h1>");
         } else {
           res.writeHead(200, { "content-type": "text/html" });
           res.end(data);
@@ -22,7 +22,7 @@ function getInterfaces(req, res, parsedUrl) {
       const filename1 = path.join("src", "view", "ui.html");
       fs.readFile(filename1, "utf8", (error, data) => {
         if (error) {
-          console.error("Datei-Lesefehler:", error);
+          console.error("File-Readerror:", error);
           res.writeHead(500, { "content-type": "text/html" });
           res.end("<h1>500 - Server-Fehler</h1>");
         } else {

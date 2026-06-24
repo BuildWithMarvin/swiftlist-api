@@ -14,7 +14,7 @@ export async function findSession(sessionID)
    const value =  await redisClient.get(`session:${sessionID}`);
   if (!value) return null;
 
-  // Verwandle den JSON-String wieder in ein lesbares Objekt
+  
   return JSON.parse(value);
 }
 
