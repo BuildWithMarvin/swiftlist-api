@@ -6,11 +6,11 @@ The goal of this project was to understand how common backend features work unde
 
 ## Tech Stack
 
-* **Runtime:** Node.js (`http` module)
+* **Runtime:** Node.js Core HTTP Module
 * **Database:** MySQL
 * **Session Store:** Redis
-* **Authentification:** `bcrypt`
-* **Security Utilities:** `crypto`
+* **Authentification:** bcrypt
+* **Security Utilities:** crypto
 
 ## Features
 
