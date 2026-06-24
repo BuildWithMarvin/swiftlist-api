@@ -50,12 +50,6 @@ Instead of using Express.js or another web framework, the API uses Node.js core 
 * **Secure cookie attributes are enabled**
 * **Login verification includes measures to reduce timing-based information leaks**
 
-### Database Access
-
-* **MySQL is used for persistent data storage**
-* **Queries explicitly select required columns instead of using `SELECT` ***
-* **Validation and error handling for malformed JSON requests and database operation failures.**
-
 ## Running Locally
 
 ### Prerequisites
