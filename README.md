@@ -40,7 +40,7 @@ Instead of using Express.js or another web framework, the API uses Node.js core 
 * **Redis Storage:** Sessions are stored in Redis.
 * **Session Expiration:** Each session has a configurable Time-To-Live (TTL).
 * **Role Caching:** User roles are saved directly in the session to reduce MySQL queries.
-* ***User-Agent Validation:** Checks if the current User-Agent matches the login session to protect against session hijacking.
+* **User-Agent Validation:** Checks if the current User-Agent matches the login session to protect against session hijacking.
 
 ### Security
 
