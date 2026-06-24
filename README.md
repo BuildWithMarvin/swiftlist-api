@@ -37,18 +37,19 @@ Instead of using Express.js or another web framework, the API uses Node.js core 
 
 ### Session Management
 
-* **Sessions are stored in Redis**
-* **Each session has a configurable TTL**
-* **User roles are cached within the session to reduce database lookups**
-* * **User-Agent Validation:** Checks if the current User-Agent matches the login session to protect against session hijacking.
+* **Redis Storage:** Sessions are stored in Redis.
+* **Session Expiration:** Each session has a configurable Time-To-Live (TTL).
+* **Role Caching:** User roles are saved directly in the session to reduce MySQL queries.
+* ***User-Agent Validation:** Checks if the current User-Agent matches the login session to protect against session hijacking.
 
 ### Security
 
-* **Passwords are hashed with bcrypt**
-* **Session identifiers are generated using Node.js crypto utilities**
-* **Request payloads are limited to 16 KB**
-* **Secure cookie attributes are enabled**
-* **Login verification includes measures to reduce timing-based information leaks**
+* **Password Hashing:** Passwords are hashed using bcrypt.
+* **Session IDs:** Generated using the native Node.js crypto module.
+* **Payload Limits:** Incoming request payloads are limited to 16 KB.
+* **Secure Cookies:** Attributes like HttpOnly and SameSite are enabled.
+* **Login verification:** includes measures to reduce timing-based information leaks
+* **Timing Attacks:** Login verification includes measures to reduce timing-based information leaks.
 
 ## Running Locally
 
