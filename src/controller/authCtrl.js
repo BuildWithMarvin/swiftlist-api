@@ -2,6 +2,7 @@ import fs from "fs";
 import path from "path";
 import bcrypt from "bcrypt";
 import queryString from "query-string";
+import { stringify as uuidStringify } from 'uuid';
 import { getUserForLogin } from "../model/dbModel.js";
 import { createSession } from "../middleware/sessions.js";
 import { setDefaultHighWaterMark } from "stream";
@@ -20,6 +21,10 @@ export async function prcsLogin(req, res) {
       return;
     }
     const user = await getUserForLogin(username);
+
+    const testID = await uuidStringify(user.id);
+
+    user.id = testID; 
 
     const match = user ? await bcrypt.compare(password, user.password) : false;
     if (!match) {

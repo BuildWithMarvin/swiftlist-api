@@ -49,7 +49,7 @@ export async function createSession(req, user) {
   const userAgent = req.headers["user-agent"] || "unknown";
 
   const sessionPayload = {
-    userId: user.user_id,
+    userId: user.id,
     username: user.username,
     role: user.role,
     userAgent: userAgent,
