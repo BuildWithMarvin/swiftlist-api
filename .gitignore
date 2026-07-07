@@ -1,5 +1,5 @@
 config.json
-.env
+
 
 _scraps
 
@@ -7,5 +7,6 @@ node_modules/
 
 .vscode/
 
+src/view/dashboard.html
 
 

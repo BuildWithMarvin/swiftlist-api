@@ -7,6 +7,7 @@ import routeRequest from './routers/router.js';
 const app = http.createServer(async (req, res) => {
     const start = performance.now();
     const parsedUrl = url.parse(req.url, true);
+    
 
     res.on('finish', ()=>{
          const end = performance.now();  

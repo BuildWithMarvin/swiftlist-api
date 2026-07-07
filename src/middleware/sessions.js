@@ -30,7 +30,7 @@ export async function attachUserToRequest(req) {
     if (sessionData) {
       const currentAgent = req.headers["user-agent"] || "unknown";
 
-      // Save IP addresses and timestamps in logs for better security.
+      // TODO: Save IP addresses and timestamps in logs for better security ?
 
       // Check User-Agent to prevent session hijacking. Must match the login state
       if (sessionData.userAgent === currentAgent) {
