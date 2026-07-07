@@ -32,6 +32,7 @@ export async function createEntry(req, res) {
 }
 
 // TODO: Secure endpoint – currently, any logged-in user can access entries by ID.
+<<<<<<< HEAD
 
 export async function showTodos(req, res, id) {
   const result = await getTodos(id);
@@ -64,6 +65,16 @@ export async function showTodo(req,res, id, title) {
   result.forEach((element) =>
     Object.keys(element).forEach((key) => {
       
+=======
+export async function showTodos(res, id) {
+  const result = await getTodos(id);
+
+  //TODO: Review if current JSON structure is optimal for frontend iteration
+
+  result.forEach((element) =>
+    Object.keys(element).forEach((key) => {
+     
+>>>>>>> bf12a52d48db8a90c58dd0a010c343debfea104e
       if (key == "id") {
         const todoID = uuidStringify(element[key]);
         element.id = todoID;

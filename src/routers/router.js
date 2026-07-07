@@ -24,6 +24,7 @@ async function routeRequest(req, res, parsedUrl) {
     return res.end();
   }
 
+<<<<<<< HEAD
   const method = req.method;
   const routeHandler = routes[method]?.[pathname];
 
@@ -34,6 +35,9 @@ async function routeRequest(req, res, parsedUrl) {
     res.writeHead(404);
     res.end("Page not found");
   }
+=======
+  handlePaths(pathname, req, res, parsedUrl); // TODO: Refactor to pass 'parsedUrl' object instead of 'pathname' for better extensibility?
+>>>>>>> bf12a52d48db8a90c58dd0a010c343debfea104e
 }
 
 export default routeRequest;
