@@ -24,7 +24,7 @@ async function routeRequest(req, res, parsedUrl) {
     return res.end();
   }
 
-  handlePaths(pathname, req, res, parsedUrl); // just commit the parsedUrl object instead of property 'pathname' ?
+  handlePaths(pathname, req, res, parsedUrl); // TODO: Refactor to pass 'parsedUrl' object instead of 'pathname' for better extensibility?
 }
 
 export default routeRequest;

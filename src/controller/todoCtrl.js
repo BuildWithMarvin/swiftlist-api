@@ -2,7 +2,7 @@ import { createTodo, getTodos, getTodo } from "../model/dbModel.js";
 import { collectRequestData } from "../utils/requestParser.js";
 import { v7 as uuidv7 } from "uuid";
 import { stringify as uuidStringify } from "uuid";
-// uuidv7 generation new
+
 export async function createEntry(req, res) {
   const rawdata = await collectRequestData(req);
   const data = await JSON.parse(rawdata);
@@ -29,16 +29,15 @@ export async function createEntry(req, res) {
   return;
 }
 
-// not secure enough logged in user can access everyone else entry by knowing the id. TODO: implement a more secure solution
-// new ! dont forget to mention the buffer converting back in uuid string 
+// TODO: Secure endpoint – currently, any logged-in user can access entries by ID.
 export async function showTodos(res, id) {
   const result = await getTodos(id);
 
-  //TODO: Perhaps consider a different JSON structure for iteration in the frontend
-  // const convertedResults = {};
+  //TODO: Review if current JSON structure is optimal for frontend iteration
+
   result.forEach((element) =>
     Object.keys(element).forEach((key) => {
-      // console.log(`${key}1: ${element[key]}`);
+     
       if (key == "id") {
         const todoID = uuidStringify(element[key]);
         element.id = todoID;
