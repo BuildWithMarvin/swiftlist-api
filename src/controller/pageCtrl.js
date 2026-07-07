@@ -2,7 +2,7 @@ import fs from "fs";
 import path from "path";
 
 
-export function showLoginPage(res) {
+export function showLoginPage(req, res, parsedUrl) {
   const filename = path.join("src", "view", "login.html");
   fs.readFile(filename, "utf8", (error, data) => {
     if (error) {
@@ -16,7 +16,7 @@ export function showLoginPage(res) {
   });
 }
 
-export function showDashboard(res) {
+export function showDashboard(req, res, parsedUrl) {
   const filename = path.join("src", "view", "dashboard.html");
   fs.readFile(filename, "utf8", (error, data) => {
     if (error) {

@@ -1,7 +1,7 @@
 import fs from "fs";
 import path from "path";
 
-export function showDesign(res) {
+export function showDesign(req, res, parsedUrl) {
   const filename = path.join("src", "view", "styles", "output.css");
   fs.readFile(filename, "utf8", (error, data) => {
     if (error) {
@@ -15,7 +15,7 @@ export function showDesign(res) {
   });
 }
 
-export function sendScript(res) {
+export function sendScript(req, res) {
   const filename = path.join("src", "view", "js", "login.js");
   fs.readFile(filename, "utf8", (error, data) => {
     if (error) {

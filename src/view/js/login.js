@@ -25,7 +25,6 @@ const response = await fetch("http://localhost:3000/validate", {
 });
 
 if (response.ok) {
-
   window.location.href = "/dashboard"; 
 } else {
   console.error("error login");

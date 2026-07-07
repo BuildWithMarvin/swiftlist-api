@@ -50,14 +50,11 @@ export async function getTodo(user_id, title)
     const query = `
     Select * from todos WHERE user_id = UNHEX(REPLACE(?,'-','')) and title = ? 
 `;
-
-  try {
+try {
     const [result] = await pool.query(query, [user_id, title]);
     return result;
   } catch (err) {
     console.log(err);
     return null;
   }
-
-
 }

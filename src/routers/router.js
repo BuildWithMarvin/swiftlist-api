@@ -1,6 +1,6 @@
 import { attachUserToRequest } from "../middleware/sessions.js";
-import { handlePaths, handleGetRoutes, handlePostRoutes } from "./routes.js";
-
+// import { handlePaths, handleGetRoutes, handlePostRoutes } from "./routes.js";
+import { routes } from './routes.js';
 /*
   TODO: Automate static file handling (images, CSS) to separate 
   asset delivery from core application routing logic as the app scales.
@@ -24,7 +24,16 @@ async function routeRequest(req, res, parsedUrl) {
     return res.end();
   }
 
-  handlePaths(pathname, req, res, parsedUrl); // just commit the parsedUrl object instead of property 'pathname' ?
+  const method = req.method;
+  const routeHandler = routes[method]?.[pathname];
+
+
+  if (routeHandler) {
+    routeHandler(req, res, parsedUrl); 
+  } else {
+    res.writeHead(404);
+    res.end("Page not found");
+  }
 }
 
 export default routeRequest;
