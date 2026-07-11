@@ -17,7 +17,7 @@ export function getSessionId(req) {
   const cookieHeader = req.headers.cookie;
   if (!cookieHeader) return null;
   const cookies = parseCookies(req);
-  return cookies["sessionId"] || null; // Nullish Coalescing ensures that only null/undefined values are caught
+  return cookies["sessionId"] || null;
 }
 
 export async function attachUserToRequest(req) {

@@ -9,7 +9,7 @@ import { collectRequestData } from "../utils/requestParser.js";
 
 export async function prcsLogin(req, res) {
   try {
-    console.log("Test");
+    
     const rawdata = await collectRequestData(req);
     const data = await JSON.parse(rawdata);
     const username = data?.username;

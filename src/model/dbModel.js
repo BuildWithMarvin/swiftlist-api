@@ -7,7 +7,7 @@ export async function getUserForLogin(username) {
     WHERE username = ?
   `;
   const [rows] = await pool.query(query, [username]);
-
+  
   return rows[0] ?? null;
 }
 
@@ -28,7 +28,7 @@ export async function createTodo(entry) {
     console.log(err);
     return null;
   }
-  return entry.id;
+  return 
 }
 
 export async function getTodos(user_id) {
@@ -58,3 +58,24 @@ try {
     return null;
   }
 }
+
+
+// export async function createUser(user) {
+//   const query = `
+//     INSERT INTO users (id, username, password, email, role) VALUES
+// (UNHEX(REPLACE(?,'-','')),?, ?, ?,?);
+//   `;
+//   try {
+//     const [result] = await pool.query(query, [
+//       user.id,
+//       user.username,
+//       user.password,
+//       user.email,
+//       user.role,
+//     ]);
+//   } catch (err) {
+//     console.log(err);
+//     return null;
+//   }
+//   return entry.id;
+// }

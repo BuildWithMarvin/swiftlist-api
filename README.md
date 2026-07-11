@@ -1,6 +1,6 @@
 # SwiftList API – Vanilla Node.js REST Backend
 
-A REST API for a To-Do management application built entirely with Node.js core modules. 
+A REST API for a todo-list management application built entirely with Node.js core modules. 
 
 The goal of this project was to understand how common backend features work under the hood by avoiding frameworks such as Express.js. Request handling, routing, session management, and database communication were implemented manually using Node.js core functionality.
 
@@ -21,6 +21,8 @@ The goal of this project was to understand how common backend features work unde
 * **Role-based authorization**
 * **Secure cookie handling (HttpOnly, SameSite=Lax)**
 * **Automatic session expiration through Redis TTL**
+* **Strict resource ownership validation**
+
 
 ## Implementation Details
 
@@ -40,7 +42,7 @@ Instead of using Express.js or another web framework, the API uses Node.js core 
 * **Redis Storage:** Sessions are stored in Redis.
 * **Session Expiration:** Each session has a configurable Time-To-Live (TTL).
 * **Role Caching:** User roles are saved directly in the session to reduce MySQL queries.
-* **User-Agent Validation:** Checks if the current User-Agent matches the login session to protect against session hijacking.
+* **User-Agent Validation**
 
 ### Security
 
@@ -48,8 +50,18 @@ Instead of using Express.js or another web framework, the API uses Node.js core 
 * **Session IDs:** Generated using the native Node.js crypto module.
 * **Payload Limits:** Incoming request payloads are limited to 16 KB.
 * **Secure Cookies:** Attributes like HttpOnly and SameSite are enabled.
-* **Login verification:** includes measures to reduce timing-based information leaks
-* **Timing Attacks:** Login verification includes measures to reduce timing-based information leaks.
+
+### Database & Data Modeling
+
+* **Optimized Database IDs:**  UUID v7 stored as BINARY(16) for performant, time-sortable primary keys.
+* **Binary Storage:** UUIDs are stored as BINARY(16) in the database for maximum query performance and minimal storage footprint, and are parsed back to strings for API responses.
+
+## Upcoming Features
+
+* **Improved Error Handling:** Ensuring that all exceptions are caught properly so users only see friendly error messages instead of raw database errors or stack traces.
+* **Application Logging:** Setting up a logging mechanism for better debugging and server monitoring.
+* **Role-based authorization**
+* **Login Security:** Mitigation of timing-based information leaks during authentication.
 
 ## Running Locally
 
