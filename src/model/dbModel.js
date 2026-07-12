@@ -28,15 +28,14 @@ export async function createTodo(entry) {
     console.log(err);
     return null;
   }
-  return 
+  return;
 }
 
 export async function getTodos(user_id) {
   const query = `
     Select * from todos WHERE user_id = UNHEX(REPLACE(?,'-',''))
 `;
-
-  try {
+try {
     const [result] = await pool.query(query, [user_id]);
     return result;
   } catch (err) {
@@ -45,13 +44,12 @@ export async function getTodos(user_id) {
   }
 }
 
-export async function getTodo(user_id, title)
-{
-    const query = `
-    Select * from todos WHERE user_id = UNHEX(REPLACE(?,'-','')) and title = ? 
+export async function getTodo(id) {
+  const query = `
+    Select * from todos WHERE id = UNHEX(REPLACE(?,'-','')) 
 `;
-try {
-    const [result] = await pool.query(query, [user_id, title]);
+  try {
+    const [result] = await pool.query(query, [id]);
     return result;
   } catch (err) {
     console.log(err);
@@ -59,23 +57,24 @@ try {
   }
 }
 
+export async function createUser(user) {
+  const query = `
+    INSERT INTO users (id, username, password, email, role) VALUES
+(UNHEX(REPLACE(?,'-','')),?, ?, ?,?);
+  `;
+  try {
+    const [result] = await pool.query(query, [
+      user.id,
+      user.username,
+      user.password,
+      user.email,
+      user.role,
+    ]);
+    return result;
+  } catch (err) {
+    console.log(err);
+    return null;
+  }
+  
+}
 
-// export async function createUser(user) {
-//   const query = `
-//     INSERT INTO users (id, username, password, email, role) VALUES
-// (UNHEX(REPLACE(?,'-','')),?, ?, ?,?);
-//   `;
-//   try {
-//     const [result] = await pool.query(query, [
-//       user.id,
-//       user.username,
-//       user.password,
-//       user.email,
-//       user.role,
-//     ]);
-//   } catch (err) {
-//     console.log(err);
-//     return null;
-//   }
-//   return entry.id;
-// }
