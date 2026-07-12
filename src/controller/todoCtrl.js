@@ -1,16 +1,15 @@
 import { createTodo, getTodos, getTodo } from "../model/dbModel.js";
 import { collectRequestData } from "../utils/requestParser.js";
 import { v7 as uuidv7 } from "uuid";
-import { userIdValidation } from "../middleware/identifyUser.js";
 import { bytesToUUID } from "../utils/uuidFromBytes.js";
 
-export async function createEntry(req, res) {
+export async function createEntry(req, res, parsedUrl) {
   const rawdata = await collectRequestData(req);
   const data = await JSON.parse(rawdata);
 
   const entry = {
     id: uuidv7(),
-    user_id: req.user.userId,
+    user_id: req.user.id,
     is_done: 0,
     title: data?.title,
     description: data?.description,
@@ -24,24 +23,26 @@ export async function createEntry(req, res) {
 
   const insert = await createTodo(entry);
 
-  const todoID = JSON.stringify(entry.id);
+  const entryID = JSON.stringify(entry.id);
   res.writeHead(200, {
     "Content-Type": "text/plain",
   });
-  res.end(todoID);
+  res.end(entryID);
   return;
 }
 
-export async function showTodos(req, res, id) {
-  const UserId = userIdValidation(id, req.user.userId);
+export async function showTodos(req, res) {
 
-  if (!UserId) {
+    const userId = req.user.id;
+
+
+  if (!userId) {
     res.writeHead(404, { "content-type": "text/html" });
     res.end("not found");
     return;
   }
 
-  const result = await getTodos(UserId);
+  const result = await getTodos(userId);
 
   const todos = JSON.stringify(bytesToUUID(result));
 
@@ -52,8 +53,8 @@ export async function showTodos(req, res, id) {
   return;
 }
 
-export async function showTodo(req, res, id, title) {
-  const result = await getTodo(id, title);
+export async function showTodo(req, res, id) {
+  const result = await getTodo();
 
   const todos = JSON.stringify(bytesToUUID(result));
 

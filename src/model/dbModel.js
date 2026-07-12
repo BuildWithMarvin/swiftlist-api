@@ -1,4 +1,5 @@
 import { pool } from "../config/db.js";
+import {handleDbError} from "../middleware/dbErrorMap.js"
 
 export async function getUserForLogin(username) {
   const query = `
@@ -6,9 +7,15 @@ export async function getUserForLogin(username) {
     FROM users 
     WHERE username = ?
   `;
-  const [rows] = await pool.query(query, [username]);
-  
+  try{
+    const [rows] = await pool.query(query, [username]);
+
   return rows[0] ?? null;
+}
+  catch (err) {
+    
+    throw handleDbError(err);
+  }
 }
 
 export async function createTodo(entry) {
@@ -24,11 +31,10 @@ export async function createTodo(entry) {
       entry.is_done,
       entry.description,
     ]);
-  } catch (err) {
-    console.log(err);
-    return null;
+  }  catch (err) {
+    throw handleDbError(err);
   }
-  return;
+  
 }
 
 export async function getTodos(user_id) {
@@ -39,8 +45,7 @@ try {
     const [result] = await pool.query(query, [user_id]);
     return result;
   } catch (err) {
-    console.log(err);
-    return null;
+    throw handleDbError(err);
   }
 }
 
@@ -52,8 +57,7 @@ export async function getTodo(id) {
     const [result] = await pool.query(query, [id]);
     return result;
   } catch (err) {
-    console.log(err);
-    return null;
+    throw handleDbError(err);
   }
 }
 
@@ -72,8 +76,7 @@ export async function createUser(user) {
     ]);
     return result;
   } catch (err) {
-    console.log(err);
-    return null;
+    throw handleDbError(err);
   }
   
 }
