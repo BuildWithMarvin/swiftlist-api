@@ -9,7 +9,6 @@ import { collectRequestData } from "../utils/requestParser.js";
 
 export async function prcsLogin(req, res) {
   try {
-    
     const rawdata = await collectRequestData(req);
     const data = await JSON.parse(rawdata);
     const username = data?.username;
@@ -17,7 +16,7 @@ export async function prcsLogin(req, res) {
 
     const user = await getUserForLogin(username);
 
-    const match = user ? await bcrypt.compare(password, user.password) : false;
+ const match = user ? await bcrypt.compare(password, user.password) : false;
     if (!match) {
       res.writeHead(401, { "content-type": "text/html" });
       res.end("unauthorized");
@@ -35,6 +34,7 @@ export async function prcsLogin(req, res) {
     });
     res.end("login successful");
     return;
+    
   } catch (error) {
     console.error("Login Request Error:", error.message);
 
@@ -55,7 +55,7 @@ export async function prcsLogin(req, res) {
       return res.end("The form data submitted could not be processed.");
     }
 
-    res.writeHead(500, { "Content-Type": "text/plain; charset=utf-8" });
+     res.writeHead(500, { "Content-Type": "text/plain; charset=utf-8" });
     return res.end(
       "Ein interner Serverfehler ist aufgetreten. Bitte später erneut versuchen.",
     );
