@@ -16,7 +16,6 @@ The goal of this project is to understand how common backend features work under
 
 * **User registration and login**
 * **Session-based authentication using Redis**
-* **Session Store:** Redis
 * **CRUD operations for task management**,
 * **Role-based authorization**
 * **Secure cookie handling (HttpOnly, SameSite=Lax)**
@@ -27,14 +26,7 @@ The goal of this project is to understand how common backend features work under
 ## Implementation Details
 
 ### Custom HTTP Server
-
-Instead of using Express.js or another web framework, the API uses Node.js core modules for: 
-
-* **Request handling**
-* **URL routing**
-* **Request body parsing**
-* **Stream processing**
-* **Response generation**
+built the server using Node.js core modules instead of using frameworks like Express.js. This way, I had to handle things like routing, parsing the request body, and sending responses manually. It was a great way to learn how Node.js actually works under the hood.
 
 
 ### Session Management
