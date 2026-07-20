@@ -3,12 +3,13 @@ import { collectRequestData } from "../utils/requestParser.js";
 import { v7 as uuidv7 } from "uuid";
 import { bytesToUUID } from "../utils/uuidFromBytes.js";
 import {parseJSONSafely} from "../utils/jsonParser.js"
+import {uuid7} from "../utils/uuids.js"
 
 export async function createEntry(req, res, parsedUrl) {
   const rawdata = await collectRequestData(req);
   const data = await parseJSONSafely(rawdata);
 
-  const newId = uuidv7();
+  const newId = uuid7();
 
 if (!newId) {
     res.writeHead(500, { "Content-Type": "text/plain" });

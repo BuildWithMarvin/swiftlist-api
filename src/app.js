@@ -15,8 +15,8 @@ const app = http.createServer(async (req, res) => {
   try {
     await routeRequest(req, res, parsedUrl);
   } catch (err) {
-    console.error(err);
-    res.statusCode = 500;
+    console.error('[Global Error Catcher]:', err);
+    res.writeHead(500, { "Content-Type": "text/plain" });
     res.end("Internal Server Error");
   }
 });
