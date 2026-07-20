@@ -2,11 +2,15 @@ import bcrypt from "bcrypt";
 import { createUser } from "../model/dbModel.js";
 import { collectRequestData } from "../utils/requestParser.js";
 import { v7 as uuidv7 } from "uuid";
+import {parseJSONSafely} from "../utils/jsonParser.js"
 
 export async function registerUser(req, res, parsedUrl) {
   const rawdata = await collectRequestData(req);
-  const data = await JSON.parse(rawdata);
-
+  const data = await parseJSONSafely(rawdata);
+  /*Todo : error handling - check first if data is null and then if properties exists.
+   wrong formated json throws an exception in collectRequestData or in parseJSONsafely if not testable via pman test by curl
+  */
+  
    if (!data.password || !data.username ) {
     res.writeHead(422, { "content-type": "text/html" });
     res.end("missing parameters");

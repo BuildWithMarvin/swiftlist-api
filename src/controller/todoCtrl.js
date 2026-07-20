@@ -2,13 +2,22 @@ import { createTodo, getTodos, getTodo } from "../model/dbModel.js";
 import { collectRequestData } from "../utils/requestParser.js";
 import { v7 as uuidv7 } from "uuid";
 import { bytesToUUID } from "../utils/uuidFromBytes.js";
+import {parseJSONSafely} from "../utils/jsonParser.js"
 
 export async function createEntry(req, res, parsedUrl) {
   const rawdata = await collectRequestData(req);
-  const data = await JSON.parse(rawdata);
+  const data = await parseJSONSafely(rawdata);
+
+  const newId = uuidv7();
+
+if (!newId) {
+    res.writeHead(500, { "Content-Type": "text/plain" });
+    res.end("Internal Server Error: Could not generate entry ID");
+    return;
+  } 
 
   const entry = {
-    id: uuidv7(),
+    id: newId,
     user_id: req.user.id,
     is_done: 0,
     title: data?.title,
@@ -23,11 +32,11 @@ export async function createEntry(req, res, parsedUrl) {
 
   const insert = await createTodo(entry);
 
-  const entryID = JSON.stringify(entry.id);
+ 
   res.writeHead(200, {
     "Content-Type": "text/plain",
   });
-  res.end(entryID);
+  res.end(entry.id);
   return;
 }
 

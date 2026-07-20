@@ -7,6 +7,7 @@ export function collectRequestData(request) {
 
     request.on("data", (chunk) => {
       if (size + chunk.length > MAX_SIZE) {
+        console.log("DEBUG: Payload-Limit erreicht!");
         reject(new Error("Payload too large"));
         request.destroy();
         return;

@@ -1,5 +1,4 @@
 import { attachUserToRequest } from "../middleware/sessions.js";
-// import { handlePaths, handleGetRoutes, handlePostRoutes } from "./routes.js";
 import { routes } from './routes.js';
 /*
   TODO: Automate static file handling (images, CSS) to separate 
@@ -29,7 +28,7 @@ async function routeRequest(req, res, parsedUrl) {
 
 
   if (routeHandler) {
-    routeHandler(req, res, parsedUrl); 
+    await routeHandler(req, res, parsedUrl); 
   } else {
     res.writeHead(404);
     res.end("Page not found");

@@ -6,24 +6,32 @@ import { getUserForLogin } from "../model/dbModel.js";
 import { createSession } from "../middleware/sessions.js";
 import { session_ttl_seconds } from "../config/sessionConfig.js";
 import { collectRequestData } from "../utils/requestParser.js";
+import { parseJSONSafely } from "../utils/jsonParser.js";
 
 export async function prcsLogin(req, res) {
   try {
     const rawdata = await collectRequestData(req);
-    const data = await JSON.parse(rawdata);
-    const username = data?.username;
-    const password = data?.password;
+
+    const data = await parseJSONSafely(rawdata);
+
+    if (!data) {
+      throw Error("PARSE_ERROR");
+    }
+
+    const { username, password } = data;
+
+    if (!username || !password) {
+      throw new Error("MISSING_CREDENTIALS");
+    }
 
     const user = await getUserForLogin(username);
 
- const match = user ? await bcrypt.compare(password, user.password) : false;
+    const match = user ? await bcrypt.compare(password, user.password) : false;
     if (!match) {
-      res.writeHead(401, { "content-type": "text/html" });
-      res.end("unauthorized");
-      return;
+      throw new Error("WRONG_CREDENTIALS");
     }
 
-    const testID = await uuidStringify(user.id);
+    const testID = uuidStringify(user.id);
 
     user.id = testID;
     const cookie = await createSession(req, user);
@@ -34,7 +42,6 @@ export async function prcsLogin(req, res) {
     });
     res.end("login successful");
     return;
-    
   } catch (error) {
     console.error("Login Request Error:", error.message);
 
@@ -55,9 +62,14 @@ export async function prcsLogin(req, res) {
       return res.end("The form data submitted could not be processed.");
     }
 
-     res.writeHead(500, { "Content-Type": "text/plain; charset=utf-8" });
+    res.writeHead(500, { "Content-Type": "text/plain; charset=utf-8" });
     return res.end(
       "Ein interner Serverfehler ist aufgetreten. Bitte später erneut versuchen.",
     );
+
+     res.writeHead(500, { "Content-Type": "text/plain; charset=utf-8" });
+    return res.end(
+      "Ein interner Serverfehler ist aufgetreten. Bitte später erneut versuchen.",
+    );    
   }
 }
