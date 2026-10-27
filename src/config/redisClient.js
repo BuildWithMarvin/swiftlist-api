@@ -1,10 +1,18 @@
 import { createClient } from 'redis';
-import config from '../../config.json' with { type: 'json' };
+import config from '../../config.js'
 
+if (!config.redis.host || !config.redis.password) {
+  console.error("FEHLER: REDIS_HOST oder REDIS_PASSWORD wurden nicht geladen! Prüfe deine .env");
+}
 
 const redisClient = createClient({
-  url: config.redis.url,
-  password: config.redis.password 
+  socket: {
+    host: config.redis.host,
+    port: config.redis.port,
+    tls: true
+  },
+  username: 'default',
+  password: config.redis.password
 });
 
 

@@ -14,8 +14,10 @@
   "dependencies": {
     "@tailwindcss/cli": "^4.3.0",
     "bcrypt": "^6.0.0",
+    "dotenv": "^18.0.9",
     "express": "^5.1.0",
     "mysql2": "^3.15.3",
+    "pg": "^8.23.1",
     "query-string": "^9.4.0",
     "redis": "^5.10.0",
     "tailwindcss": "^4.3.0",

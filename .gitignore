@@ -1,4 +1,4 @@
-config.json
+.env
 
 tests.js 
 
@@ -8,6 +8,6 @@ node_modules/
 
 .vscode/
 
-src/view/dashboard.html
+
 
 

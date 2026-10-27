@@ -1,7 +1,7 @@
 import app from './app.js';
 import redisClient from './config/redisClient.js';
 import { testDatabaseConnection } from"./config/db.js";
-import config from '../config.json' with { type: 'json' };
+import config from '../config.js';
 
 /*
  TODO: Implement Graceful Shutdown.

@@ -11,7 +11,7 @@ export const routes = {
     '/login':(req, res, parsedUrl) => showLoginPage(req, res, parsedUrl),
     '/dashboard':(req, res, parsedUrl) => showDashboard(req, res, parsedUrl),
     '/todos': (req, res) => showTodos(req, res),
-    '/todo': (req, res, parsedUrl) => showTodo(req, res, parsedUrl.query.id),
+    '/todo': (req, res, parsedUrl) => showTodo(req, res, parsedUrl.query.todo),
     '/styles/output.css':(req, res) => showDesign(req, res),
     '/js/login.js': (req, res) => sendScript (req, res)
 },

@@ -1,7 +1,4 @@
-import fs from "fs";
-import path from "path";
 import bcrypt from "bcrypt";
-import { stringify as uuidStringify } from "uuid";
 import { getUserForLogin } from "../model/dbModel.js";
 import { createSession } from "../middleware/sessions.js";
 import { session_ttl_seconds } from "../config/sessionConfig.js";
@@ -31,7 +28,7 @@ export async function prcsLogin(req, res) {
       throw new Error("WRONG_CREDENTIALS");
     }
 
-    const testID = uuidStringify(user.id);
+    const testID = user.id;
 
     user.id = testID;
     const cookie = await createSession(req, user);

@@ -1,7 +1,5 @@
 import { createTodo, getTodos, getTodo } from "../model/dbModel.js";
 import { collectRequestData } from "../utils/requestParser.js";
-import { v7 as uuidv7 } from "uuid";
-import { bytesToUUID } from "../utils/uuidFromBytes.js";
 import {parseJSONSafely} from "../utils/jsonParser.js"
 import {uuid7} from "../utils/uuids.js"
 
@@ -54,7 +52,7 @@ export async function showTodos(req, res) {
 
   const result = await getTodos(userId);
 
-  const todos = JSON.stringify(bytesToUUID(result));
+  const todos = JSON.stringify(result);
 
   res.writeHead(200, {
     "Content-Type": "application/json",
@@ -63,10 +61,11 @@ export async function showTodos(req, res) {
   return;
 }
 
-export async function showTodo(req, res, id) {
-  const result = await getTodo();
+export async function showTodo(req, res, todo) {
+  
+  const result = await getTodo(todo);
 
-  const todos = JSON.stringify(bytesToUUID(result));
+  const todos = JSON.stringify(result);
 
   res.writeHead(200, {
     "Content-Type": "application/json",

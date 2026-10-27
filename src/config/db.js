@@ -1,23 +1,22 @@
-import mysql from 'mysql2/promise';
-import config from '../../config.json' with { type: 'json' };
+import pg from 'pg';
+const { Pool } = pg;
+import config from '../../config.js'
 
-export const pool = mysql.createPool({
-  host: config.db.host,
-  user: config.db.user,
-  password: config.db.password,
-  database: config.db.database,
-  waitForConnections: config.db.waitForConnections,
-  connectionLimit: config.db.connectionLimit,
-  queueLimit: config.db.queueLimt,
+export const pool = new Pool({
+  connectionString: config.db.supabaseConnectionString,
+  max: config.db.maxConnections,
+  connectionTimeoutMillis: config.db.connectionTimeoutMillis,
+  idleTimeoutMillis: config.db.idleTimeoutMillis
 });
 
 
 export async function testDatabaseConnection() {
   try {
-  
-    const connection = await pool.getConnection();
+    
+    const client = await pool.connect(); 
     console.log("Database connection test successful.");
-    connection.release(); 
+    
+    client.release(); 
   } catch (error) {
     console.error("Database connection failed:", error.message);
     process.exit(1); 

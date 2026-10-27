@@ -1,61 +1,63 @@
 import { pool } from "../config/db.js";
-import {handleDbError} from "../middleware/dbErrorMap.js"
+import { handleDbError } from "../middleware/dbErrorMap.js"
 
 export async function getUserForLogin(username) {
   const query = `
     SELECT id, username, password, role 
     FROM users 
-    WHERE username = ?
+    WHERE username = $1
   `;
-  try{
-    const [rows] = await pool.query(query, [username]);
+  try {
+    const { rows } = await pool.query(query, [username]);
 
-  return rows[0] ?? null;
-}
-  catch (err) {
-    
+    return rows[0] ?? null;
+  } catch (err) {
     throw handleDbError(err);
   }
 }
 
 export async function createTodo(entry) {
   const query = `
-    INSERT INTO todos (id, user_id, title, is_done, description) VALUES
-(UNHEX(REPLACE(?,'-','')),UNHEX(REPLACE(?,'-','')), ?, ?, ? );
+    INSERT INTO todos (id, user_id, title, is_done, description) 
+    VALUES ($1, $2, $3, $4, $5)
+    RETURNING id; 
   `;
   try {
-    const [result] = await pool.query(query, [
+    const { rows } = await pool.query(query, [
       entry.id,
       entry.user_id,
       entry.title,
       entry.is_done,
       entry.description,
     ]);
-  }  catch (err) {
-    throw handleDbError(err);
-  }
-  
-}
 
-export async function getTodos(user_id) {
-  const query = `
-    Select * from todos WHERE user_id = UNHEX(REPLACE(?,'-',''))
-`;
-try {
-    const [result] = await pool.query(query, [user_id]);
-    return result;
+    return rows[0];
   } catch (err) {
     throw handleDbError(err);
   }
 }
 
-export async function getTodo(id) {
+export async function getTodos(user_id) {
   const query = `
-    Select * from todos WHERE id = UNHEX(REPLACE(?,'-','')) 
+    SELECT * FROM todos WHERE user_id = $1
+  `;
+  try {
+    const { rows } = await pool.query(query, [user_id]);
+    
+    
+    return rows; 
+  } catch (err) {
+    throw handleDbError(err);
+  }
+}
+
+export async function getTodo(todo) {
+  const query = `
+    Select * from todos WHERE title = $1 
 `;
   try {
-    const [result] = await pool.query(query, [id]);
-    return result;
+    const { rows } = await pool.query(query, [todo]);
+    return rows;
   } catch (err) {
     throw handleDbError(err);
   }
@@ -64,20 +66,20 @@ export async function getTodo(id) {
 export async function createUser(user) {
   const query = `
     INSERT INTO users (id, username, password, email, role) VALUES
-(UNHEX(REPLACE(?,'-','')),?, ?, ?,?);
+($1, $2, $3, $4, $5);
   `;
   try {
-    const [result] = await pool.query(query, [
+    const { rows } = await pool.query(query, [
       user.id,
       user.username,
       user.password,
       user.email,
       user.role,
     ]);
-    return result;
+    return rows;
   } catch (err) {
     throw handleDbError(err);
   }
-  
+
 }
 
