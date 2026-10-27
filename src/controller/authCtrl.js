@@ -61,12 +61,9 @@ export async function prcsLogin(req, res) {
 
     res.writeHead(500, { "Content-Type": "text/plain; charset=utf-8" });
     return res.end(
-      "Ein interner Serverfehler ist aufgetreten. Bitte später erneut versuchen.",
+      "An internal server error has occurred. Please try again later.",
     );
 
-     res.writeHead(500, { "Content-Type": "text/plain; charset=utf-8" });
-    return res.end(
-      "Ein interner Serverfehler ist aufgetreten. Bitte später erneut versuchen.",
-    );    
+     
   }
 }

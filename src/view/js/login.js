@@ -16,7 +16,7 @@ formular.addEventListener("submit", async function(event) {
  }
 
 
-const response = await fetch("http://localhost:3000/validate", {
+const response = await fetch("validate", {
   method: "POST",
   headers: {
     "Content-Type": "application/json"
